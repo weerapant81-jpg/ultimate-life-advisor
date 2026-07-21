@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ActiveTab, ImageSettings } from '../types';
-import { ArrowUpRight, Shield, BarChart3, TrendingUp, ChevronRight, Award, UserCheck, ClipboardList, Map, CheckCircle2, RefreshCw, Layers, Star, Play, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Shield, BarChart3, TrendingUp, ChevronRight, Award, UserCheck, ClipboardList, Map, CheckCircle2, RefreshCw, Layers, Star, Play } from 'lucide-react';
 import { motion } from 'motion/react';
 import WealthProShowcase from './WealthProShowcase';
 
@@ -11,57 +11,6 @@ interface HomeViewProps {
 }
 
 export default function HomeView({ setActiveTab, lang, imageSettings = {} }: HomeViewProps) {
-  const [activeServiceFocus, setActiveServiceFocus] = useState('investment');
-
-  const serviceFocusItems = [
-    {
-      id: 'investment',
-      count: '01',
-      icon: <TrendingUp className="w-4 h-4" />,
-      labelTh: 'ลงทุนและออม',
-      labelEn: 'Invest & Save',
-      titleTh: 'จัดพอร์ตการลงทุนให้สอดคล้องกับเป้าหมายชีวิต',
-      titleEn: 'Investment planning shaped around your life goals',
-      descTh: 'ออกแบบสัดส่วนสินทรัพย์และแผนออมระยะยาวให้เหมาะกับเป้าหมาย ระยะเวลา และระดับความเสี่ยงที่คุณรับได้',
-      descEn: 'Build a practical asset allocation and long-term saving plan aligned with your goals, timeline, and risk profile.',
-    },
-    {
-      id: 'protection',
-      count: '02',
-      icon: <Shield className="w-4 h-4" />,
-      labelTh: 'คุ้มครองครอบครัว',
-      labelEn: 'Protect Family',
-      titleTh: 'ปิดช่องว่างความคุ้มครองชีวิต สุขภาพ และรายได้',
-      titleEn: 'Close life, health, and income protection gaps',
-      descTh: 'วิเคราะห์ภาระครอบครัว ความคุ้มครองเดิม และความเสี่ยงด้านสุขภาพ เพื่อออกแบบแผนที่ดูแลคนสำคัญได้จริง',
-      descEn: 'Review existing coverage, family obligations, and health exposure to create a protection plan that genuinely supports your household.',
-    },
-    {
-      id: 'retirement',
-      count: '03',
-      icon: <BarChart3 className="w-4 h-4" />,
-      labelTh: 'เกษียณและการศึกษา',
-      labelEn: 'Future Goals',
-      titleTh: 'วางแผนเกษียณและทุนการศึกษาบุตรอย่างเป็นระบบ',
-      titleEn: 'Plan retirement and education funding with structure',
-      descTh: 'แปลงเป้าหมายระยะยาวให้เป็นตัวเลขรายเดือนที่ทำได้จริง พร้อมติดตามและปรับแผนตามช่วงชีวิต',
-      descEn: 'Turn long-term goals into realistic monthly actions, then review and adjust the plan as life changes.',
-    },
-    {
-      id: 'tax',
-      count: '04',
-      icon: <ClipboardList className="w-4 h-4" />,
-      labelTh: 'ภาษีและรีวิวแผน',
-      labelEn: 'Tax & Review',
-      titleTh: 'จัดการภาษีและทบทวนแผนการเงินประจำปี',
-      titleEn: 'Optimize tax planning and annual financial reviews',
-      descTh: 'ช่วยจัดลำดับสิทธิประโยชน์ทางภาษี ตรวจแผนเดิม และปรับพอร์ตให้ยังสอดคล้องกับเป้าหมายของครอบครัว',
-      descEn: 'Prioritize tax benefits, review existing plans, and keep your portfolio aligned with changing family goals.',
-    },
-  ];
-
-  const selectedServiceFocus = serviceFocusItems.find((item) => item.id === activeServiceFocus) ?? serviceFocusItems[0];
-
   // Stagger variants for smooth entry animations
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -174,69 +123,6 @@ export default function HomeView({ setActiveTab, lang, imageSettings = {} }: Hom
                   ? 'วางโครงสร้างการเงินให้ชัดเจนขึ้น ตั้งแต่วันนี้ไปจนถึงวันที่คุณต้องการใช้ชีวิตอย่างมั่นคง' 
                   : 'Clear, practical planning across the decisions that shape your financial life.'}
               </p>
-            </div>
-
-            <div className="mb-10 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 rounded-2xl border border-slate-100 bg-white p-3 shadow-xs">
-              <div className="lg:col-span-5 grid grid-cols-2 gap-2">
-                {serviceFocusItems.map((item) => {
-                  const isActive = item.id === activeServiceFocus;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setActiveServiceFocus(item.id)}
-                      className={`flex min-h-20 items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all ${
-                        isActive
-                          ? 'border-brand-orange bg-brand-charcoal text-white shadow-sm'
-                          : 'border-slate-100 bg-slate-50/70 text-slate-600 hover:border-brand-orange/40 hover:bg-white'
-                      }`}
-                    >
-                      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
-                        isActive ? 'bg-brand-orange text-white' : 'bg-white text-brand-orange'
-                      }`}>
-                        {item.icon}
-                      </span>
-                      <span className="min-w-0">
-                        <span className={`block text-[10px] font-mono font-bold tracking-wider ${isActive ? 'text-white/55' : 'text-slate-400'}`}>
-                          {item.count}
-                        </span>
-                        <span className="block text-sm font-display font-bold leading-tight">
-                          {lang === 'TH' ? item.labelTh : item.labelEn}
-                        </span>
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <motion.div
-                key={selectedServiceFocus.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.28 }}
-                className="lg:col-span-7 rounded-xl bg-slate-50 p-6 md:p-8 border border-slate-100 flex flex-col justify-between gap-6"
-              >
-                <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-brand-orange/10 px-3 py-1 text-[10px] font-mono font-bold uppercase tracking-wider text-brand-orange">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    {lang === 'TH' ? 'เลือกเส้นทางที่เหมาะกับคุณ' : 'Choose your advisory path'}
-                  </div>
-                  <h3 className="font-serif text-2xl md:text-3xl font-semibold text-brand-charcoal leading-tight">
-                    {lang === 'TH' ? selectedServiceFocus.titleTh : selectedServiceFocus.titleEn}
-                  </h3>
-                  <p className="text-sm md:text-base leading-relaxed text-slate-600 max-w-2xl">
-                    {lang === 'TH' ? selectedServiceFocus.descTh : selectedServiceFocus.descEn}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setActiveTab(ActiveTab.Contact)}
-                  className="inline-flex w-fit items-center gap-2 rounded-lg bg-brand-orange px-5 py-3 text-xs font-display font-bold uppercase tracking-wider text-white hover:bg-brand-orange/90 transition-colors"
-                >
-                  {lang === 'TH' ? 'นัดหมายเพื่อประเมินแผน' : 'Schedule a planning review'}
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
-              </motion.div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
