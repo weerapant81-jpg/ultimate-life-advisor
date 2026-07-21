@@ -44,6 +44,9 @@ app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
+    // Allow the Firebase Google sign-in popup to talk back to the opener.
+    // The default 'same-origin' severs window.opener and breaks signInWithPopup.
+    crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },
   })
 );
 
