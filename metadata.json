@@ -1,0 +1,6 @@
+{
+  "name": "Ultimate life Advisor",
+  "description": "Premium financial asset management dashboard & multi-lingual personal life advisor blog",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

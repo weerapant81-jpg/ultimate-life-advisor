@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['weerapan.aia@hotmail.com', 'weerapan.t81@gmail.com'];
+    }
+
+    // Public website content: anyone may read, only admin may write.
+    match /blog_posts/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /image_settings/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /advisor_members/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /video_items/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Deny everything else by default — no public read of the whole database.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

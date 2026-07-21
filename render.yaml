@@ -1,0 +1,34 @@
+# Render Blueprint for Ultimate Life Advisor.
+# Deploy: push this repo to GitHub, then Render Dashboard > New > Blueprint,
+# pick the repo, and fill in the secret env vars marked "sync: false".
+services:
+  - type: web
+    name: ultimate-life-advisor
+    runtime: node
+    region: singapore          # closest region to Thailand
+    plan: free                 # free spins down when idle (~50s cold start); use "starter" for always-on
+    # --include=dev is required: tsx/vite/tailwind live in devDependencies, and
+    # NODE_ENV=production would otherwise make npm skip them and break build + start.
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # --- Public build-time vars (baked into the frontend by Vite) ---
+      - key: VITE_TURNSTILE_SITE_KEY
+        sync: false            # set the real Cloudflare Turnstile SITE key in the dashboard
+      - key: VITE_SENTRY_DSN
+        sync: false            # optional: frontend Sentry DSN (leave blank to disable)
+      # --- Server-side secrets ---
+      - key: RESEND_API_KEY
+        sync: false            # new Resend key (the old one was deleted)
+      - key: TURNSTILE_SECRET_KEY
+        sync: false            # Cloudflare Turnstile SECRET key
+      - key: SENTRY_DSN
+        sync: false            # optional: backend Sentry DSN
+      # --- Non-secret app config ---
+      - key: APPOINTMENT_TO_EMAIL
+        value: weerapan.aia@hotmail.com
+      - key: APPOINTMENT_FROM_EMAIL
+        value: Ultimate Life Advisor <onboarding@resend.dev>
